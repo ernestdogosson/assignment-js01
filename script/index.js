@@ -2,6 +2,7 @@
 let greetings = 'Hello world!';
 
 console.log(greetings);
+console.log('Have a nice day!');
 
 // Exercise 2
 
@@ -18,7 +19,6 @@ let x = 3;
 let y = 9;
 
 let areaRectangle = x * y;
-let areaTriangle = y * 0.5 * 3;
 
 console.log(`x + y = ${x + y}`);
 console.log(`y - x = ${y - x}`);
