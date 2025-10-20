@@ -1,3 +1,6 @@
+let username = prompt('Enter username here');
+let password = prompt('Enter password here');
+
 function isValidPassword(password, username) {
 	return password.includes(username) ||
 		password.length < 8 ||
@@ -6,4 +9,4 @@ function isValidPassword(password, username) {
 		: console.log(true);
 }
 
-isValidPassword('dogoson123', 'dogoson');
+isValidPassword(password, username);
