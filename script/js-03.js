@@ -10,3 +10,6 @@ function isValidPassword(password, username) {
 }
 
 isValidPassword(password, username);
+
+
+function checkNumber()
