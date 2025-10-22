@@ -19,7 +19,6 @@
 // Exercise 2
 function generateRandomArray(number) {
 	const arr = [];
-	number = parseInt(prompt('Enter a length of array.'));
 
 	for (let i = 1; i <= number; i++) {
 		arr.push(Math.floor(Math.random() * 100) + 1);
@@ -28,3 +27,10 @@ function generateRandomArray(number) {
 }
 
 generateRandomArray();
+
+// Exercise 3
+// const myArray = generateRandomArray()
+
+// for (let i = 0; i < arr.length; 1++) {
+// 	console.log(i);
+// }
