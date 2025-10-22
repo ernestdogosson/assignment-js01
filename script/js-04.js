@@ -30,14 +30,14 @@ function generateRandomArray(number) {
 generateRandomArray();
 
 // Exercise 3
-const myArray = generateRandomArray(6);
+const myArray = generateRandomArray(4);
 
 function sumEvenNumbers(array) {
 	let sumEven = 0;
 
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] % 2 == 0) {
-			sumEven = sumEven + array[i];
+			sumEven += array[i];
 		}
 	}
 	return sumEven;
