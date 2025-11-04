@@ -1,66 +1,88 @@
 const account = {
   accountName: 'Jane Doe',
   balance: 10000,
-
   getBalance() {
     return this.balance;
   },
 
   deposit() {
-    let amountD = parseFloat(prompt('Enter amount'));
-    let newBalanceD;
-
-    if (amountD > 0 && amountD <= this.getBalance()) {
-      newBalanceD = this.getBalance() + amountD;
-      return { amountD, newBalanceD };
+    let amount = parseFloat(prompt('Enter amount'));
+    let errorMsg = this.accountError(amount, this.getBalance(), 'deposit');
+    if (errorMsg) {
+      console.log(errorMsg);
+      return null;
     }
+    this.balance += amount;
+    return { amount, newBalance: this.balance };
   },
 
   withdrawal() {
-    let amountW = parseFloat(prompt('Enter amount'));
-    let newBalanceW;
-
-    if (amountW > 0 && amountW <= this.getBalance()) {
-      newBalanceW = this.getBalance() - amountW;
-    } else if (amountW > this.getBalance()) {
-      console.log(this.accountError());
-    } else {
-      return { amountW, newBalanceW };
+    let amount = parseFloat(prompt('Enter amount'));
+    let errorMsg = this.accountError(amount, this.getBalance(), 'withdrawal');
+    if (errorMsg) {
+      console.log(errorMsg);
+      return null;
     }
+    this.balance -= amount;
+    return { amount, newBalance: this.balance };
   },
-
   getAccountName() {
     return this.accountName;
   },
 
-  accountError() {
-    let errorW = 'Insufficent account balance.';
-    return errorW;
+  accountError(amount, balance, type) {
+    if (isNaN(amount)) {
+      return 'Error: Please enter a valid number';
+    }
+    if (amount <= 0) {
+      return 'Error: amount must be greater than 0';
+    }
+    if (type === 'withdrawal' && amount > balance) {
+      return 'Error: Insufficient funds';
+    }
+    return null;
   },
 };
 
 function atm() {
-  const message = parseFloat(
-    prompt(
-      'Select a choice 1.) See balance 2.) Make a deposit 3.) Make withdrawal 4.) Get account name 5.) Exit'
-    )
-  );
-
-  switch (message) {
-    case 1:
-      let accountBalance = account.getBalance();
-      console.log(`Your account balance is ${accountBalance} SEK`);
+  let running = true;
+  while (running) {
+    const input = prompt(
+      'Select a choice:\n1.) See balance\n2.) Make a deposit\n3.) Make withdrawal\n4.) Get account name\n5.) Exit'
+    );
+    if (input === null) {
+      console.log('Goodbye!');
       break;
-    case 2:
-      const { amountD, newBalanceD } = account.deposit();
-      console.log(`You deposited ${amountD} SEK. Your new account balance is ${newBalanceD} SEK`);
-      break;
-    case 3:
-      const { amountW, newBalanceW } = account.withdrawal();
-      console.log(`You withdrew ${amountW} SEK. Your new account balance is ${newBalanceW} SEK`);
-      break;
-    case 4:
-      console.log(`Account Name: ${account.getAccountName()}4`);
+    }
+    const message = parseFloat(input);
+    switch (message) {
+      case 1:
+        console.log(`Your account balance is ${account.getBalance()} SEK`);
+        break;
+      case 2:
+        const depositResult = account.deposit();
+        if (depositResult) {
+          const { amount, newBalance } = depositResult;
+          console.log(`You deposited ${amount} SEK. Your new account balance is ${newBalance} SEK`);
+        }
+        break;
+      case 3:
+        const withdrawalResult = account.withdrawal();
+        if (withdrawalResult) {
+          const { amount, newBalance } = withdrawalResult;
+          console.log(`You withdrew ${amount} SEK. Your new account balance is ${newBalance} SEK`);
+        }
+        break;
+      case 4:
+        console.log(`Account Name: ${account.getAccountName()}`);
+        break;
+      case 5:
+        console.log('Thank you for banking with us!');
+        running = false;
+        break;
+      default:
+        console.log('Invalid choice. Please select 1-5.');
+    }
   }
 }
 
