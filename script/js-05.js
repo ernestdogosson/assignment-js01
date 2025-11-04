@@ -1,54 +1,66 @@
 const account = {
   accountName: 'Jane Doe',
   balance: 10000,
-  getBalace() {
+
+  getBalance() {
     return this.balance;
   },
+
   deposit() {
-    let amount = parseFloat(prompt('Enter amount'));
+    let amountD = parseFloat(prompt('Enter amount'));
+    let newBalanceD;
+
+    if (amountD > 0 && amountD <= this.getBalance()) {
+      newBalanceD = this.getBalance() + amountD;
+      return { amountD, newBalanceD };
+    }
   },
 
   withdrawal() {
-    let amount = parseFloat(prompt('Enter amount'));
-    let newBalance;
+    let amountW = parseFloat(prompt('Enter amount'));
+    let newBalanceW;
 
-    if (amount > 0 || amount <= this.getBalace()) {
-      newBalance = this.getBalace() - amount;
-
-      return newBalance;
+    if (amountW > 0 && amountW <= this.getBalance()) {
+      newBalanceW = this.getBalance() - amountW;
+    } else if (amountW > this.getBalance()) {
+      console.log(this.accountError());
+    } else {
+      return { amountW, newBalanceW };
     }
   },
+
   getAccountName() {
     return this.accountName;
   },
+
   accountError() {
-    if (this.getAccountName() !== 'Jane Doe') {
-      console.log('Invalid Account Name');
-    }
+    let errorW = 'Insufficent account balance.';
+    return errorW;
   },
 };
-
-// account.withdrawal(8000);
 
 function atm() {
   const message = parseFloat(
     prompt(
-      'Select a choice 1.) See balance 2.) Make a deposit 3.) Make withdral 4.) Get account name 5.) Exit'
+      'Select a choice 1.) See balance 2.) Make a deposit 3.) Make withdrawal 4.) Get account name 5.) Exit'
     )
   );
 
   switch (message) {
     case 1:
-      console.log(account.getBalace());
+      let accountBalance = account.getBalance();
+      console.log(`Your account balance is ${accountBalance} SEK`);
       break;
     case 2:
-      console.log(account.deposit());
+      const { amountD, newBalanceD } = account.deposit();
+      console.log(`You deposited ${amountD} SEK. Your new account balance is ${newBalanceD} SEK`);
       break;
     case 3:
-      console.log(account.withdrawal());
+      const { amountW, newBalanceW } = account.withdrawal();
+      console.log(`You withdrew ${amountW} SEK. Your new account balance is ${newBalanceW} SEK`);
       break;
-    case 5:
-      console.log(account.getAccountName());
+    case 4:
+      console.log(`Account Name: ${account.getAccountName()}4`);
   }
 }
 
